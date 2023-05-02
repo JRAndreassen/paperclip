@@ -11,6 +11,7 @@ pkgs.mkShell {
     nixpkgs-fmt
     openssl
     pkg-config
+    libiconv
   ] ++ pkgs.lib.optional (!rustup) rust
   ++ pkgs.lib.optional (system == "aarch64-darwin") darwin.apple_sdk.frameworks.Security;
   shellHook = ''

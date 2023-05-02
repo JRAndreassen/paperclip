@@ -319,6 +319,91 @@ pub trait Emitter: Sized {
         Ok(())
     }
 
+    // /// Entrypoint for emitter. Given an API spec, generate code
+    // /// inside Rust modules in the configured working directory.
+    // ///
+    // /// **NOTE:** Not meant to be overridden.
+    // #[allow(clippy::field_reassign_with_default)]
+    // fn generate_v3(&self, api: &openapiv3::OpenAPI) -> Result<(), Error> {
+    //     let state = self.state();
+    //     state.reset_internal_fields();
+    //
+    //     let m = state.get_meta();
+    //     if m.borrow().is_none() {
+    //         let mut meta = CrateMeta::default();
+    //         meta.name = Some(api.info.title.clone());
+    //         if semver::Version::parse(&api.info.version).is_ok() {
+    //             meta.version = Some(api.info.version.clone());
+    //         } else {
+    //             warn!("Unable to parse {:?} as semver version.", api.info.version);
+    //         }
+    //
+    //         state.set_meta(meta);
+    //     }
+    //
+    //     // Add default coders.
+    //     // let mut coders = api.coders.clone();
+    //     // if !coders.contains_key(&JSON_MIME) {
+    //     //     coders.insert(JSON_MIME.clone(), JSON_CODER.clone());
+    //     // }
+    //     //
+    //     // if !coders.contains_key(&YAML_MIME) {
+    //     //     coders.insert(YAML_MIME.clone(), YAML_CODER.clone());
+    //     // }
+    //     //
+    //     // state.set_media_info(api.spec_format, &coders);
+    //
+    //     // Set host and base path.
+    //     if let Some(h) = api.servers.first() {
+    //         let url = h.url.clone();
+    //         let mut parts = h.url.split(':');
+    //         let mut u = state.base_url.borrow_mut();
+    //         if let Some(host) = parts.next() {
+    //             Host::parse(host).map_err(|e| PaperClipError::InvalidHost(url.clone(), e))?;
+    //             u.set_host(Some(host)).expect("expected valid host in URL?");
+    //         }
+    //
+    //         if let Some(port) = parts.next() {
+    //             let p = port.parse::<u16>().map_err(|_| {
+    //                 PaperClipError::InvalidHost(url, url_dep::ParseError::InvalidPort)
+    //             })?;
+    //             u.set_port(Some(p)).expect("expected valid port in URL?");
+    //         }
+    //     }
+    //
+    //     if let Some(p) = api.servers.first() {
+    //         if let Ok(url) = url_dep::Url::parse(&p.url) {
+    //             state.base_url.borrow_mut().set_path(url.path());
+    //         }
+    //     }
+    //
+    //     let gen = CodegenEmitter(self);
+    //     // // Generate file contents by accumulating definitions.
+    //     for (name, schema) in &api.components.unwrap().schemas {
+    //         debug!("Creating definition {}", name);
+    //         gen.generate_from_definition(schema)?;
+    //     }
+    //
+    //     // for (path, map) in &api.paths.paths {
+    //     //     RequirementCollector {
+    //     //         path,
+    //     //         emitter: self,
+    //     //         api,
+    //     //         map,
+    //     //         template_params: HashSet::new(),
+    //     //     }
+    //     //     .collect()?;
+    //     // }
+    //
+    //     state.declare_modules()?;
+    //     state.write_definitions()?;
+    //     state.add_builders()?;
+    //     state.add_client_deps()?;
+    //     state.add_deps()?;
+    //
+    //     Ok(())
+    // }
+
     /// Builds a schema. This resolves type aliases to known types
     /// and defines/reuses types based on the given context.
     ///
